@@ -12,9 +12,27 @@ export default banco => {
 }
 
 const gerarConexoesFase = (banco, fase, dimensoesBanco) => {
-  return banco[fase]
-    .map((_, index) => gerarConexoesRamo(fase, index, dimensoesBanco))
-    .flat()
+  const [fases, ramos, grupos, capacitores] = dimensoesBanco
+
+  let conexoes = []
+
+  conexoes.push(
+    gerarConexao([fase, 2, 0, 0], [fase, 0, grupos - 1, 0])
+  )
+  conexoes.push(
+    gerarConexao([fase, 3, 0, 0], [fase, 1, grupos - 1, 0])
+  )
+  conexoes.push(
+    gerarConexao([fase, 3, 0, 0], [fase, 0, grupos - 1, 0])
+  )
+
+  conexoes.push(
+    banco[fase].map((_, index) =>
+      gerarConexoesRamo(fase, index, dimensoesBanco)
+    )
+  )
+
+  return conexoes.flat(Infinity)
 }
 
 const gerarConexoesRamo = (fase, ramo, dimensoesBanco) => {

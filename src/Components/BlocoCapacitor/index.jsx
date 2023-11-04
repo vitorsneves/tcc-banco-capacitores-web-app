@@ -8,13 +8,15 @@ import imagemCapacitor from '../../assets/capacitor.svg'
 const handleSuperiorStyle = {
   left: 30,
   top: 5,
-  background: 'transparent'
+  background: 'black',
+  borderColor: 'black'
 }
 
 const handleInferiorStyle = {
   left: 30,
   bottom: 5,
-  background: 'transparent'
+  background: 'black',
+  borderColor: 'black'
 }
 
 const obterTipoHandleSuperior = coordenadas =>

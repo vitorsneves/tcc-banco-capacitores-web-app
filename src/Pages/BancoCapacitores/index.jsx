@@ -1,5 +1,5 @@
 import ReactFlow, { Background } from 'reactflow'
-import 'reactflow/dist/base.css'
+import 'reactflow/dist/style.css'
 import gerarNodes from './gerarNodes'
 import gerarConexoesBanco from './gerarConexoesBanco'
 import gerarBanco from './gerarBancoAleatorio'
@@ -11,7 +11,7 @@ import clonar from '../../utils/clonar'
 const nodeTypes = { capacitor: BlocoCapacitor }
 
 export default () => {
-  const [banco, setBanco] = useState(gerarBanco(4, 5, 2))
+  const [banco, setBanco] = useState(gerarBanco(4, 10, 4))
 
   const conexoes = useMemo(() => gerarConexoesBanco(banco), [])
 

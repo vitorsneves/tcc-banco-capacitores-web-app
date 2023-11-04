@@ -1,6 +1,6 @@
 import gerarVetor from '../../utils/gerarVetor'
 
-const QUANTIDADE_DE_FASES = 1
+const QUANTIDADE_DE_FASES = 3
 
 export default (ramos, grupos, quantidadePorGrupo) =>
   gerarVetor(QUANTIDADE_DE_FASES, () =>

@@ -67,7 +67,7 @@ export default ({
           required
         />
         <Text> Desvio = {Math.round(desvio)}%</Text>
-        <Group jusity='flex-end'>
+        <Group justify='flex-end'>
           <Button variant='outline' type='submit' color='red'>
             Salvar alterações
           </Button>

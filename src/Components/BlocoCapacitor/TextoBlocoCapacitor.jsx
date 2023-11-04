@@ -1,15 +1,5 @@
 import { Stack, Text } from '@mantine/core'
-
-const obterLetraFase = fase => {
-  switch (fase) {
-    case 0:
-      return 'A'
-    case 1:
-      return 'B'
-    case 2:
-      return 'C'
-  }
-}
+import { obterLetraFase } from '../../utils/operacoesBanco'
 
 export default ({ capacitor, coordenadas }) => {
   const { numeroSerie, capacitanciaMedida } = capacitor
