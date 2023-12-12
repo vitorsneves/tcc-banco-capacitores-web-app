@@ -38,6 +38,7 @@ export default ({
   }
 
   const salvar = values => {
+    debugger
     atualizarCoordenadasFixas(values)
     fecharEditor()
   }
@@ -52,6 +53,7 @@ export default ({
         <NumberInput
           hideControls
           decimalScale={3}
+          allowNegative={false}
           decimalSeparator=','
           {...form.getInputProps('capacitanciaPlaca')}
           label='Capacitância de placa'
@@ -60,6 +62,7 @@ export default ({
         <NumberInput
           hideControls
           decimalScale={3}
+          allowNegative={false}
           decimalSeparator=','
           {...form.getInputProps('capacitanciaMedida')}
           label='Capacitância medida'

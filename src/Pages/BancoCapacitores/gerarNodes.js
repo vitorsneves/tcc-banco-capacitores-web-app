@@ -12,9 +12,38 @@ const paddingVertical = 40
 const paddingHorizontal = 20
 
 export default (banco, atualizarCapacitor) => {
+  let nodes = []
+
+  nodes.push(...gerarFaseNode(banco))
+
+  nodes.push(...gerarCapacitores(banco, atualizarCapacitor))
+
+  nodes.push(...gerarTCs(banco))
+
+  return nodes
+}
+
+const gerarTCs = banco => {
+  const dimensoesFase = obterDimensoesFase(banco)
+
+  const posicaoTC = {
+    x: dimensoesFase.largura / 2 - 120,
+    y: dimensoesFase.altura / 2 - 26
+  }
+
+  return [0, 1, 2].map(fase => ({
+    id: `TC-fase-${obterLetraFase(fase)}`,
+    position: posicaoTC,
+    type: 'tc',
+    draggable: false,
+    parentNode: obterLetraFase(fase)
+  }))
+}
+
+const gerarCapacitores = (banco, atualizarCapacitor) => {
   const dimensaoBanco = obterDimensoesBanco(banco)
 
-  let capacitores = gerarFaseNode(dimensaoBanco)
+  let capacitores = []
 
   banco.forEach((fase, faseIndex) =>
     fase.forEach((ramo, ramoIndex) =>
@@ -43,20 +72,13 @@ export default (banco, atualizarCapacitor) => {
   return capacitores
 }
 
-const gerarFaseNode = dimensaoBanco => {
+const gerarFaseNode = banco => {
+  const dimensaoBanco = obterDimensoesBanco(banco)
+
   const quantidadeGrupos = dimensaoBanco[2]
   const quantidadePorGrupo = dimensaoBanco[3]
 
-  const retanguloFase = {
-    largura:
-      paddingHorizontal +
-      passoHorizontalCentral +
-      2 * quantidadePorGrupo * passoHorizontal,
-    altura:
-      paddingVertical +
-      passoVerticalCentral +
-      2 * quantidadeGrupos * passoVertical
-  }
+  const dimensoesFase = obterDimensoesFase(banco)
 
   let nodesDeFase = [
     {
@@ -65,8 +87,8 @@ const gerarFaseNode = dimensaoBanco => {
       data: { label: 'Fase A' },
       position: { x: 0, y: 0 },
       style: {
-        width: retanguloFase.largura,
-        height: retanguloFase.altura,
+        width: dimensoesFase.largura,
+        height: dimensoesFase.altura,
         backgroundColor: 'rgba(255, 0, 0, 0.2)'
       },
       draggable: false
@@ -75,10 +97,10 @@ const gerarFaseNode = dimensaoBanco => {
       id: 'B',
       type: 'light',
       data: { label: 'Fase B' },
-      position: { x: retanguloFase.largura + passoVertical, y: 0 },
+      position: { x: dimensoesFase.largura + passoVertical, y: 0 },
       style: {
-        width: retanguloFase.largura,
-        height: retanguloFase.altura,
+        width: dimensoesFase.largura,
+        height: dimensoesFase.altura,
         backgroundColor: 'rgba(0, 255, 0, 0.2)'
       },
       draggable: false
@@ -88,12 +110,12 @@ const gerarFaseNode = dimensaoBanco => {
       type: 'light',
       data: { label: 'Fase C' },
       position: {
-        x: 2 * (retanguloFase.largura + passoVertical),
+        x: 2 * (dimensoesFase.largura + passoVertical),
         y: 0
       },
       style: {
-        width: retanguloFase.largura,
-        height: retanguloFase.altura,
+        width: dimensoesFase.largura,
+        height: dimensoesFase.altura,
         backgroundColor: 'rgba(0, 0, 255, 0.2)'
       },
       draggable: false
@@ -155,4 +177,22 @@ const obterCoordenadaYCapacitor = (coordenadas, dimensaoBanco) => {
   coordenadaY += grupo * passoVertical
 
   return coordenadaY
+}
+
+const obterDimensoesFase = banco => {
+  const dimensaoBanco = obterDimensoesBanco(banco)
+
+  const quantidadeGrupos = dimensaoBanco[2]
+  const quantidadePorGrupo = dimensaoBanco[3]
+
+  return {
+    largura:
+      paddingHorizontal +
+      passoHorizontalCentral +
+      2 * quantidadePorGrupo * passoHorizontal,
+    altura:
+      paddingVertical +
+      passoVerticalCentral +
+      2 * quantidadeGrupos * passoVertical
+  }
 }

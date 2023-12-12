@@ -4,14 +4,15 @@ import gerarNodes from './gerarNodes'
 import gerarConexoesBanco from './gerarConexoesBanco'
 import gerarBanco from './gerarBancoAleatorio'
 import BlocoCapacitor from '../../Components/BlocoCapacitor'
+import BlocoTC from '../../Components/BlocoTC'
 import { useState, useMemo } from 'react'
 import { Container } from '@mantine/core'
 import clonar from '../../utils/clonar'
 
-const nodeTypes = { capacitor: BlocoCapacitor }
+const nodeTypes = { capacitor: BlocoCapacitor, tc: BlocoTC }
 
 export default () => {
-  const [banco, setBanco] = useState(gerarBanco(4, 10, 4))
+  const [banco, setBanco] = useState(gerarBanco(4, 5, 2))
 
   const conexoes = useMemo(() => gerarConexoesBanco(banco), [])
 

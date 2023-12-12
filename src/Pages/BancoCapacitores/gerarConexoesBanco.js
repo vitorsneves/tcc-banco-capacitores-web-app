@@ -1,5 +1,8 @@
 import { coordenadasParaId } from '../../utils/conversorID'
-import { obterDimensoesBanco } from '../../utils/operacoesBanco'
+import {
+  obterDimensoesBanco,
+  obterLetraFase
+} from '../../utils/operacoesBanco'
 
 const edgeStyle = { stroke: '#000', strokeWidth: '3px' }
 
@@ -12,19 +15,9 @@ export default banco => {
 }
 
 const gerarConexoesFase = (banco, fase, dimensoesBanco) => {
-  const [fases, ramos, grupos, capacitores] = dimensoesBanco
-
   let conexoes = []
 
-  conexoes.push(
-    gerarConexao([fase, 2, 0, 0], [fase, 0, grupos - 1, 0])
-  )
-  conexoes.push(
-    gerarConexao([fase, 3, 0, 0], [fase, 1, grupos - 1, 0])
-  )
-  conexoes.push(
-    gerarConexao([fase, 3, 0, 0], [fase, 0, grupos - 1, 0])
-  )
+  conexoes.push(gerarConexaoComTcDaFase(dimensoesBanco, fase))
 
   conexoes.push(
     banco[fase].map((_, index) =>
@@ -33,6 +26,31 @@ const gerarConexoesFase = (banco, fase, dimensoesBanco) => {
   )
 
   return conexoes.flat(Infinity)
+}
+
+const gerarConexaoComTcDaFase = (dimensoesBanco, fase) => {
+  const [fases, ramos, grupos, capacitores] = dimensoesBanco
+
+  let conexoesTC = []
+
+  const ultimoPrimeiroRamo = [fase, 0, grupos - 1, capacitores - 1]
+  const penultimoSegundoRamo = [fase, 1, grupos - 1, 0]
+  const segundoDoTerceiroRamo = [fase, 2, 0, capacitores - 1]
+  const primeiroQuartoRamo = [fase, 3, 0, 0]
+
+  conexoesTC.push(
+    gerarConexao(ultimoPrimeiroRamo, segundoDoTerceiroRamo)
+  )
+
+  conexoesTC.push(gerarConexaoComTc(ultimoPrimeiroRamo, fase, false))
+
+  conexoesTC.push(gerarConexaoComTc(penultimoSegundoRamo, fase, true))
+
+  conexoesTC.push(
+    gerarConexao(primeiroQuartoRamo, penultimoSegundoRamo)
+  )
+
+  return conexoesTC
 }
 
 const gerarConexoesRamo = (fase, ramo, dimensoesBanco) => {
@@ -93,3 +111,19 @@ const gerarConexao = (coordenadasFonte, coordenadasTarget) => {
     style: edgeStyle
   }
 }
+
+const gerarConexaoComTc = (coordenadasFonte, faseTC, TCEhSource) => {
+  const idCapacitor = coordenadasParaId(coordenadasFonte)
+  const idTC = obterIDTc(faseTC)
+  const idConexao = idCapacitor.concat('-->', idTC)
+
+  return {
+    id: idConexao,
+    source: TCEhSource ? idTC : idCapacitor,
+    target: TCEhSource ? idCapacitor : idTC,
+    type: 'step',
+    style: edgeStyle
+  }
+}
+
+const obterIDTc = fase => `TC-fase-${obterLetraFase(fase)}`
