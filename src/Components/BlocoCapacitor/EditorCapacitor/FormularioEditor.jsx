@@ -33,7 +33,6 @@ export default ({
   useEffect(atualizarDesvio, [form])
 
   const salvar = values => {
-    debugger
     atualizarCoordenadasFixas(values)
     fecharEditor()
   }
