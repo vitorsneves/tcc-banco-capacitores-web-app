@@ -1,4 +1,4 @@
-import gerarVetor from '../../utils/gerarVetor'
+import gerarVetor from '../../../utils/gerarVetor'
 
 const QUANTIDADE_DE_FASES = 3
 

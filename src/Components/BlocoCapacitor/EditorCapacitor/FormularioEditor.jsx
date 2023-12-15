@@ -7,10 +7,8 @@ import {
   Group
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { useState } from 'react'
-
-const calcularDesvio = (placa, medida) =>
-  ((medida - placa) / placa) * 100
+import { useState, useEffect } from 'react'
+import { calcularDesvio } from '../../../utils/operacoesBanco'
 
 export default ({
   capacitor,
@@ -23,12 +21,7 @@ export default ({
     }
   })
 
-  const [desvio, setDesvio] = useState(
-    calcularDesvio(
-      capacitor.capacitanciaPlaca,
-      capacitor.capacitanciaMedida
-    )
-  )
+  const [desvio, setDesvio] = useState(0)
 
   const atualizarDesvio = () => {
     const { capacitanciaPlaca, capacitanciaMedida } =
@@ -37,6 +30,8 @@ export default ({
     setDesvio(calcularDesvio(capacitanciaPlaca, capacitanciaMedida))
   }
 
+  useEffect(atualizarDesvio, [form])
+
   const salvar = values => {
     debugger
     atualizarCoordenadasFixas(values)
@@ -44,7 +39,7 @@ export default ({
   }
 
   return (
-    <form onChange={atualizarDesvio} onSubmit={form.onSubmit(salvar)}>
+    <form onSubmit={form.onSubmit(salvar)}>
       <Stack>
         <TextInput
           {...form.getInputProps('numeroSerie')}

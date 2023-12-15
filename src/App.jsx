@@ -6,7 +6,7 @@ import BancoCapacitores from './Pages/BancoCapacitores'
 
 export default () => {
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme='light'>
       <BancoCapacitores />
     </MantineProvider>
   )

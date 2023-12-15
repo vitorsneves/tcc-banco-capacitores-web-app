@@ -1,10 +1,13 @@
-import { coordenadasParaId } from '../../utils/conversorID'
+import { coordenadasParaId } from '../../../utils/conversorID'
 import {
   obterDimensoesBanco,
   obterLetraFase
-} from '../../utils/operacoesBanco'
+} from '../../../utils/operacoesBanco'
 
-const edgeStyle = { stroke: '#000', strokeWidth: '3px' }
+const edgeStyle = {
+  strokeWidth: 3,
+  stroke: '#000000'
+}
 
 export default banco => {
   const dimensoesBanco = obterDimensoesBanco(banco)

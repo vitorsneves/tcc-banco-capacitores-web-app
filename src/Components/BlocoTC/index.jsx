@@ -1,6 +1,5 @@
-import imagemTC from '../../assets/TC.png'
+import TC from '../../assets/TC.jsx'
 import { Handle, Position } from 'reactflow'
-import { Container, Image } from '@mantine/core'
 
 const handleStyle = {
   top: 28,
@@ -17,7 +16,7 @@ export default () => {
         isConnectable={false}
         style={{ ...handleStyle, left: 5 }}
       />
-      <Image h='50' w='auto' src={imagemTC} />
+      <TC h={50} fill={'#212529'} />
       <Handle
         type={'source'}
         position={Position.Right}

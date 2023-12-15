@@ -1,22 +1,36 @@
 import { Handle, Position } from 'reactflow'
 import { useDisclosure } from '@mantine/hooks'
-import { Group, Image } from '@mantine/core'
+import { Group } from '@mantine/core'
 import EditorDeCapacitor from './EditorCapacitor'
 import TextoBlocoCapacitor from './TextoBlocoCapacitor'
-import imagemCapacitor from '../../assets/capacitor.svg'
+import ImagemCapacitor from '../../assets/capacitor.jsx'
+import { calcularDesvio } from '../../utils/operacoesBanco.js'
 
 const handleSuperiorStyle = {
   left: 30,
   top: 5,
-  background: 'black',
-  borderColor: 'black'
+  background: 'transparent',
+  borderColor: 'transparent'
 }
 
 const handleInferiorStyle = {
   left: 30,
   bottom: 5,
-  background: 'black',
-  borderColor: 'black'
+  background: 'transparent',
+  borderColor: 'transparent'
+}
+
+const obterCorCapacitor = capacitor => {
+  return '#212529'
+
+  const { capacitanciaPlaca, capacitanciaMedida } = capacitor
+  const desvio = calcularDesvio(capacitanciaPlaca, capacitanciaMedida)
+
+  if (desvio >= 10) return '#ff8787'
+
+  if (desvio < 10 && desvio > 5) return '#ffa94d'
+
+  return '#212529'
 }
 
 const obterTipoHandleSuperior = coordenadas =>
@@ -47,7 +61,10 @@ export default ({
         atualizarCoordenadasFixas={atualizarCoordenadasFixas}
       />
       <Group h='60' gap='4' onClick={abrirEditor}>
-        <Image h='100%' w='auto' src={imagemCapacitor} />
+        <ImagemCapacitor
+          h='100%'
+          fill={obterCorCapacitor(capacitor)}
+        />
         <TextoBlocoCapacitor
           capacitor={capacitor}
           coordenadas={coordenadas}

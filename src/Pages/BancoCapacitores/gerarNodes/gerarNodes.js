@@ -1,6 +1,7 @@
-import { coordenadasParaId } from '../../utils/conversorID'
-import { obterDimensoesBanco } from '../../utils/operacoesBanco'
-import { obterLetraFase } from '../../utils/operacoesBanco'
+import { coordenadasParaId } from '../../../utils/conversorID'
+import { obterDimensoesBanco } from '../../../utils/operacoesBanco'
+import { obterLetraFase } from '../../../utils/operacoesBanco'
+import { useMantineTheme, Group } from '@mantine/core'
 
 const passoHorizontal = 200
 const passoVertical = 95
@@ -73,42 +74,36 @@ const gerarCapacitores = (banco, atualizarCapacitor) => {
 }
 
 const gerarFaseNode = banco => {
-  const dimensaoBanco = obterDimensoesBanco(banco)
-
-  const quantidadeGrupos = dimensaoBanco[2]
-  const quantidadePorGrupo = dimensaoBanco[3]
-
   const dimensoesFase = obterDimensoesFase(banco)
 
   let nodesDeFase = [
     {
       id: 'A',
-      type: 'light',
-      data: { label: 'Fase A' },
+      type: 'group',
       position: { x: 0, y: 0 },
       style: {
         width: dimensoesFase.largura,
         height: dimensoesFase.altura,
-        backgroundColor: 'rgba(255, 0, 0, 0.2)'
+        backgroundColor: '#ffe066',
+        opacity: 0.2
       },
       draggable: false
     },
     {
       id: 'B',
-      type: 'light',
-      data: { label: 'Fase B' },
+      type: 'group',
       position: { x: dimensoesFase.largura + passoVertical, y: 0 },
       style: {
         width: dimensoesFase.largura,
         height: dimensoesFase.altura,
-        backgroundColor: 'rgba(0, 255, 0, 0.2)'
+        backgroundColor: '#8ce99a',
+        opacity: 0.2
       },
       draggable: false
     },
     {
       id: 'C',
-      type: 'light',
-      data: { label: 'Fase C' },
+      type: 'group',
       position: {
         x: 2 * (dimensoesFase.largura + passoVertical),
         y: 0
@@ -116,7 +111,8 @@ const gerarFaseNode = banco => {
       style: {
         width: dimensoesFase.largura,
         height: dimensoesFase.altura,
-        backgroundColor: 'rgba(0, 0, 255, 0.2)'
+        backgroundColor: '#66d9e8',
+        opacity: 0.2
       },
       draggable: false
     }

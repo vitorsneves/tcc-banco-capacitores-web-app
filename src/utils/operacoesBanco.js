@@ -19,3 +19,6 @@ export const obterLetraFase = fase => {
       return 'C'
   }
 }
+
+export const calcularDesvio = (placa, medida) =>
+  ((medida - placa) / placa) * 100
