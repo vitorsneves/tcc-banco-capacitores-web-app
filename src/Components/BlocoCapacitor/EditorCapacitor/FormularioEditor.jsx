@@ -10,6 +10,15 @@ import { useForm } from '@mantine/form'
 import { useState, useEffect } from 'react'
 import { calcularDesvio } from '../../../utils/operacoesBanco'
 
+const obterDesvio = form => {
+  const desvio = calcularDesvio(
+    form.values.capacitanciaPlaca,
+    form.values.capacitanciaMedida
+  )
+
+  return desvio.toFixed(2)
+}
+
 export default ({
   capacitor,
   atualizarCoordenadasFixas,
@@ -20,17 +29,6 @@ export default ({
       ...capacitor
     }
   })
-
-  const [desvio, setDesvio] = useState(0)
-
-  const atualizarDesvio = () => {
-    const { capacitanciaPlaca, capacitanciaMedida } =
-      form.getTransformedValues()
-
-    setDesvio(calcularDesvio(capacitanciaPlaca, capacitanciaMedida))
-  }
-
-  useEffect(atualizarDesvio, [form])
 
   const salvar = values => {
     atualizarCoordenadasFixas(values)
@@ -63,7 +61,7 @@ export default ({
           description='em μA'
           required
         />
-        <Text> Desvio = {Math.round(desvio)}%</Text>
+        <Text> Desvio = {obterDesvio(form)}%</Text>
         <Group justify='flex-end'>
           <Button variant='outline' type='submit' color='red'>
             Salvar alterações

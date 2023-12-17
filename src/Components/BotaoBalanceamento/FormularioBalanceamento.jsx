@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { useForm } from '@mantine/form'
 import {
   Group,
   Stack,
@@ -5,65 +7,95 @@ import {
   SegmentedControl,
   Fieldset,
   NumberInput,
-  Button
+  Button,
+  Checkbox,
+  Transition
 } from '@mantine/core'
-import { useState, useEffect } from 'react'
 
-export default () => {
-  const [tipoBalanceamento, setTipoBalanceamento] = useState(
-    'Trifásico com pior fase'
-  )
+export default ({ realizarBalanceamento }) => {
+  const form = useForm({
+    initialValues: {
+      tipoDeBalanceamento: 'Trifásico com pior fase',
+      faseDeBalanceamento: 'C',
+      rebalancoRapido: false
+    }
+  })
 
-  const [fase, setFase] = useState('Fase C')
-
-  useEffect(() => {
+  const arrumarBugSegmentedControl = form => {
     setTimeout(() => {
-      setFase('Fase A')
-    }, 150)
-  }, [])
+      form.setFieldValue('faseDeBalanceamento', 'A')
+    }, 250)
+  }
+  useEffect(() => arrumarBugSegmentedControl(form), [])
+
+  const confirmar = values => {
+    realizarBalanceamento(values)
+  }
 
   return (
-    <Stack>
-      <Fieldset legend='Tipo'>
-        <Select
-          value={tipoBalanceamento}
-          onChange={setTipoBalanceamento}
-          data={[
-            'Monofásico',
-            'Trifásico com pior fase',
-            'Trifásico completo'
-          ]}
-        />
-      </Fieldset>
-
-      <Fieldset legend='Configuração'>
-        <Stack>
-          {tipoBalanceamento === 'Monofásico' && (
-            <SegmentedControl
-              data={['Fase A', 'Fase B', 'Fase C']}
-              value={fase}
-              onChange={setFase}
-              color='gray'
-            />
-          )}
-          <NumberInput
-            label='Quantidade máxima de permutações'
-            allowDecimal={false}
-            allowNegative={false}
+    <form onSubmit={form.onSubmit(confirmar)}>
+      <Stack>
+        <Fieldset legend='Tipo'>
+          <Select
+            {...form.getInputProps('tipoDeBalanceamento')}
+            data={[
+              'Monofásico',
+              'Trifásico com pior fase',
+              'Trifásico completo'
+            ]}
           />
-        </Stack>
-      </Fieldset>
+        </Fieldset>
 
-      <Group justify='flex-end'>
-        <Button
-          variant='outline'
-          type='submit'
-          color='red'
-          disabled={true}
-        >
-          Confirmar
-        </Button>
-      </Group>
-    </Stack>
+        <Fieldset legend='Configuração'>
+          <Stack>
+            <Transition
+              mounted={
+                form.values.tipoDeBalanceamento === 'Monofásico'
+              }
+              transition='slide-right'
+              duration={400}
+              timingFunction='ease'
+            >
+              {styles => {
+                return (
+                  <SegmentedControl
+                    {...form.getInputProps('faseDeBalanceamento')}
+                    style={styles}
+                    data={[
+                      { label: 'Fase A', value: 'A' },
+                      { label: 'Fase B', value: 'B' },
+                      { label: 'Fase C', value: 'C' }
+                    ]}
+                    color='gray'
+                  />
+                )
+              }}
+            </Transition>
+            <NumberInput
+              {...form.getInputProps('maximoDePermutacoes')}
+              label='Quantidade máxima de permutações'
+              required
+              allowDecimal={false}
+              allowNegative={false}
+            />
+            <Checkbox
+              {...form.getInputProps('rebalancoRapido', {
+                type: 'checkbox'
+              })}
+              label='Rebalanço rápido'
+              description='Considerar somente capacitores próximos ao solo'
+              color='red'
+              variant='outline'
+            />
+          </Stack>
+        </Fieldset>
+
+        <Group justify='flex-end'>
+          <Button variant='outline' type='submit' color='red'>
+            Confirmar
+          </Button>
+        </Group>
+      </Stack>
+    </form>
   )
 }

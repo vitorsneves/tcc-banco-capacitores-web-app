@@ -1,6 +1,10 @@
 import { obterDimensoesFase } from './posicionador/distancias'
 import obterPosicaoFase from './posicionador/posicionadorFase'
-import { obterLetraFase } from '../../../utils/operacoesBanco'
+
+import {
+  obterLetraFase,
+  obterCorFase
+} from '../../../utils/operacoesBanco'
 
 export default banco => {
   const dimensoesFase = obterDimensoesFase(banco)
@@ -15,13 +19,10 @@ export default banco => {
     id: obterLetraFase(fase),
     type: 'group',
     position: obterPosicaoFase(banco, fase),
-    style: { ...style, backgroundColor: obterCorFase(fase) },
+    style: {
+      ...style,
+      backgroundColor: obterCorFase(fase)
+    },
     draggable: false
   }))
-}
-
-const obterCorFase = fase => {
-  if (fase === 0) return '#ffe066'
-  if (fase === 1) return '#8ce99a'
-  return '#66d9e8'
 }

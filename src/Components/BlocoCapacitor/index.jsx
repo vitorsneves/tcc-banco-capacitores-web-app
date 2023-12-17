@@ -21,14 +21,14 @@ const handleInferiorStyle = {
 }
 
 const obterCorCapacitor = capacitor => {
-  return '#212529'
-
   const { capacitanciaPlaca, capacitanciaMedida } = capacitor
-  const desvio = calcularDesvio(capacitanciaPlaca, capacitanciaMedida)
+  const desvio = Math.abs(
+    calcularDesvio(capacitanciaPlaca, capacitanciaMedida)
+  )
 
-  if (desvio >= 10) return '#ff8787'
+  if (desvio >= 10) return '#e03131'
 
-  if (desvio < 10 && desvio > 5) return '#ffa94d'
+  if (desvio < 10 && desvio > 5) return '#e8590c'
 
   return '#212529'
 }

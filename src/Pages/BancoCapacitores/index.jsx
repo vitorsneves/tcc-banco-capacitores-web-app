@@ -2,7 +2,7 @@ import ReactFlow, { Panel, Background } from 'reactflow'
 import 'reactflow/dist/style.css'
 import gerarNodes from './gerarNodes/gerarNodes'
 import gerarConexoesBanco from './gerarConexoesBanco/gerarConexoesBanco'
-import gerarBanco from './gerarBanco/gerarBancoAleatorio'
+import bancoEquatorial from './gerarBanco/bancoEquatorial'
 import BlocoCapacitor from '../../Components/BlocoCapacitor'
 import BlocoTC from '../../Components/BlocoTC'
 import { useState, useMemo } from 'react'
@@ -15,7 +15,7 @@ import { Group } from '@mantine/core'
 const nodeTypes = { capacitor: BlocoCapacitor, tc: BlocoTC }
 
 export default () => {
-  const [banco, setBanco] = useState(gerarBanco(4, 5, 2))
+  const [banco, setBanco] = useState(bancoEquatorial)
 
   const conexoes = useMemo(() => gerarConexoesBanco(banco), [])
 
@@ -35,10 +35,11 @@ export default () => {
         nodes={gerarNodes(banco, atualizarCapacitor)}
         edges={conexoes}
         fitView
+        proOptions={{ hideAttribution: true }}
       >
         <Panel position='top-left'>
           <Group>
-            <BotaoBalanceamento />
+            <BotaoBalanceamento banco={banco} />
             <BotaoNightMode />
           </Group>
         </Panel>
