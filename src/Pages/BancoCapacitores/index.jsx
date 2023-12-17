@@ -6,11 +6,13 @@ import bancoEquatorial from './gerarBanco/bancoEquatorial'
 import BlocoCapacitor from '../../Components/BlocoCapacitor'
 import BlocoTC from '../../Components/BlocoTC'
 import { useState, useMemo } from 'react'
-import { Container } from '@mantine/core'
+import { Card, Container, Group } from '@mantine/core'
 import clonar from '../../utils/clonar'
 import BotaoBalanceamento from '../../Components/BotaoBalanceamento'
 import BotaoNightMode from '../../Components/BotaoNightMode'
-import { Group } from '@mantine/core'
+import DisplayDeCorrentes from '../../Components/DisplayDeCorrentes'
+import calculaCorrentesDeTodasAsFases from '../../utils/algoritmoBalanceamento/balanceador/calculadoraDoBanco'
+import { bancoWebAppParaBancoAlgoritmo } from '../../utils/operacoesBanco'
 
 const nodeTypes = { capacitor: BlocoCapacitor, tc: BlocoTC }
 
@@ -42,6 +44,16 @@ export default () => {
             <BotaoBalanceamento banco={banco} />
             <BotaoNightMode />
           </Group>
+        </Panel>
+        <Panel position='bottom-left'>
+          <Card shadow='lg' radius='md' withBorder={true}>
+            <DisplayDeCorrentes
+              correntes={calculaCorrentesDeTodasAsFases(
+                bancoWebAppParaBancoAlgoritmo(banco)
+              )}
+              size={'md'}
+            />
+          </Card>
         </Panel>
         <Background />
       </ReactFlow>

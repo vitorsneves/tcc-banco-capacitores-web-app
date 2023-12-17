@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form'
 import {
   Group,
   Stack,
-  Select,
+  NativeSelect,
   SegmentedControl,
   Fieldset,
   NumberInput,
@@ -36,13 +36,14 @@ export default ({ realizarBalanceamento }) => {
     <form onSubmit={form.onSubmit(confirmar)}>
       <Stack>
         <Fieldset legend='Tipo'>
-          <Select
+          <NativeSelect
             {...form.getInputProps('tipoDeBalanceamento')}
             data={[
               'Monofásico',
               'Trifásico com pior fase',
               'Trifásico completo'
             ]}
+            withAsterisk
           />
         </Fieldset>
 
