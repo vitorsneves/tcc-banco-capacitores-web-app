@@ -45,7 +45,7 @@ export default () => {
             <BotaoNightMode />
           </Group>
         </Panel>
-        <Panel position='bottom-left'>
+        <Panel position='top-right'>
           <Card shadow='lg' radius='md' withBorder={true}>
             <DisplayDeCorrentes
               correntes={calculaCorrentesDeTodasAsFases(

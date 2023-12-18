@@ -51,11 +51,23 @@ export const calcularDesvio = (placa, medida) =>
   ((medida - placa) / placa) * 100
 
 export const coordenadaParaTexto = coordenada => {
-  const [fase, ramo, grupo, numero] = coordenada
+  const [fase, ramo, grupo, numero] =
+    coordProgramaParaCoordTCC(coordenada)
 
-  return `(${obterLetraFase(fase)}, ${ramo + 1}, ${grupo + 1}, ${
-    numero + 1
-  })`
+  return `(${fase}, ${ramo}, ${grupo}, ${numero})`
+}
+
+export const coordProgramaParaCoordTCC = coordenadaPrograma => {
+  const coordenadaTCC = coordenadaPrograma.map(coord => coord + 1)
+
+  coordenadaTCC[0] = obterLetraFase(coordenadaTCC[0] - 1)
+
+  if (coordenadaTCC[1] > 2) {
+    coordenadaTCC[1] -= 2
+    coordenadaTCC[2] += 5
+  }
+
+  return coordenadaTCC
 }
 
 export const obterCorFase = fase => {

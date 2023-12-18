@@ -1,8 +1,10 @@
 import { Text, Grid, Card } from '@mantine/core'
 import { obterLetraFase } from '../../../utils/operacoesBanco'
+import { coordProgramaParaCoordTCC } from '../../../utils/operacoesBanco'
 
 const CoordenadasEditor = ({ coordenadas }) => {
-  const [fase, ramo, grupo, numero] = coordenadas
+  const [fase, ramo, grupo, numero] =
+    coordProgramaParaCoordTCC(coordenadas)
 
   return (
     <Card withBorder>
@@ -12,16 +14,16 @@ const CoordenadasEditor = ({ coordenadas }) => {
       <Card.Section inheritPadding mt='sm' pb='md'>
         <Grid>
           <Grid.Col span={6}>
-            <Text size='sm'>Fase: {obterLetraFase(fase)}</Text>
+            <Text size='sm'>Fase: {fase}</Text>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Text size='sm'>Ramo: {ramo + 1}</Text>
+            <Text size='sm'>Ramo: {ramo}</Text>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Text size='sm'>Grupo: {grupo + 1}</Text>
+            <Text size='sm'>Grupo: {grupo}</Text>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Text size='sm'>Capacitor: {numero + 1}</Text>
+            <Text size='sm'>Capacitor: {numero}</Text>
           </Grid.Col>
         </Grid>
       </Card.Section>

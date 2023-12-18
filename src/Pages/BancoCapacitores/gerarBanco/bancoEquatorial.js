@@ -691,7 +691,7 @@ export default [
         {
           numeroSerie: '192682.30-048',
           capacitanciaPlaca: 28.66,
-          capacitanciaMedida: 25.0
+          capacitanciaMedida: 27.9
         },
         {
           numeroSerie: '192682.30-078',

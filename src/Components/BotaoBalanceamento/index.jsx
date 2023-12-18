@@ -27,7 +27,11 @@ export default ({ banco }) => {
     setCarregando(true)
     setTimeout(async () => {
       const bancoAlgoritmo = bancoWebAppParaBancoAlgoritmo(banco)
-      setTrocas(obterTrocas(bancoAlgoritmo, configuracoes))
+      setTrocas({
+        tipoDeBalanceamento: configuracoes.tipoDeBalanceamento,
+        faseDeBalanceamento: configuracoes.faseDeBalanceamento,
+        valores: obterTrocas(bancoAlgoritmo, configuracoes)
+      })
 
       abrirSeletor()
       fecharFormulario()

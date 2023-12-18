@@ -36,7 +36,7 @@ const balanceador = (
       vetorPermutacoes = permutador.obterPermutacoesMonofasicas(fase)
     }
 
-    if (tipoDeBalanceamento === 'Trifásico com pior fase') {
+    if (tipoDeBalanceamento === 'Trifásico') {
       const piorFase = obterPiorFase(banco)
       vetorPermutacoes =
         permutador.obterPermutacoesTrifasicasComPiorFase(piorFase)
@@ -86,31 +86,26 @@ const configuracaoEhMelhor = (
   correntesNovas,
   correntesIniciais
 ) => {
-  const variacaoPercentualAtual = calcularVariacaoPercentual(
+  const variacaoAtual = calcularVariacao(
     correntesIniciais,
     correntesAtuais
   )
 
-  const variacaoPercentualNova = calcularVariacaoPercentual(
+  const variacaoNova = calcularVariacao(
     correntesIniciais,
     correntesNovas
   )
 
-  const totalAtual = variacaoPercentualAtual.reduce((a, b) => a + b)
-  const totalNova = variacaoPercentualNova.reduce((a, b) => a + b)
+  const totalAtual = variacaoAtual.reduce((a, b) => a + b)
+  const totalNova = variacaoNova.reduce((a, b) => a + b)
 
   return totalNova < totalAtual
 }
 
-const calcularVariacaoPercentual = (
-  correntesAtuais,
-  correntesNovas
-) => {
+const calcularVariacao = (correntesAtuais, correntesNovas) => {
   return correntesAtuais.map(
     (corrente, indice) =>
-      ((Math.abs(correntesNovas[indice]) - Math.abs(corrente)) /
-        Math.abs(corrente)) *
-      100
+      Math.abs(correntesNovas[indice]) - Math.abs(corrente)
   )
 }
 

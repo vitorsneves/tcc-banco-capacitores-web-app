@@ -11,7 +11,9 @@ import {
 } from '@mantine/core'
 
 const obterSteps = trocas => {
-  return trocas.map(({ coordenadas, correntes }, trocaIndex) => {
+  const { tipoDeBalanceamento, faseDeBalanceamento, valores } = trocas
+
+  return valores.map(({ coordenadas, correntes }, trocaIndex) => {
     return (
       <Stepper.Step
         key={trocaIndex}
@@ -22,7 +24,12 @@ const obterSteps = trocas => {
           />
         }
         description={
-          <DisplayDeCorrentes correntes={correntes} size={'sm'} />
+          <DisplayDeCorrentes
+            tipoDeBalanceamento={tipoDeBalanceamento}
+            faseDeBalanceamento={faseDeBalanceamento}
+            correntes={correntes}
+            size={'sm'}
+          />
         }
       />
     )
