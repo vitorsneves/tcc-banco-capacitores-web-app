@@ -47,7 +47,7 @@ export default ({ banco, marcarCapacitoresQueTrocaram }) => {
         radius='xl'
         size='xl'
       >
-        <IconScale size='32' />
+        <IconScale style={{ width: '75%', height: '75%' }} />
       </ActionIcon>
       <Modal
         opened={formularioAberto}

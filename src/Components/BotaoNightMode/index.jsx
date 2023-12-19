@@ -11,6 +11,7 @@ export default () => {
   return (
     <ActionIcon
       radius='xl'
+      size='lg'
       onClick={toggleColorScheme}
       variant='default'
     >
