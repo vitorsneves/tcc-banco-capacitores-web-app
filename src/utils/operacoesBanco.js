@@ -83,3 +83,11 @@ export const obterCorFase = fase => {
   if (fase === 1) return '#2b8a3e'
   return '#0b7285'
 }
+
+export const obterCorCoordenadaTrocada = ehNova => {
+  const { colorScheme } = useMantineColorScheme()
+
+  if (colorScheme === 'dark') return ehNova ? '#8ce99a' : '#ffc078'
+
+  return ehNova ? '#2f9e44' : '#e8590c'
+}

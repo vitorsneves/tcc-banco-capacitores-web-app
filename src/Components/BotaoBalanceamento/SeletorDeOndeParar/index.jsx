@@ -36,8 +36,17 @@ const obterSteps = trocas => {
   })
 }
 
-export default ({ trocas }) => {
+export default ({
+  trocas,
+  marcarCapacitoresQueTrocaram,
+  fecharSeletor
+}) => {
   const [trocaFinal, setTrocaFinal] = useState(0)
+
+  const confirmar = () => {
+    marcarCapacitoresQueTrocaram(trocas, trocaFinal + 1)
+    fecharSeletor()
+  }
 
   return (
     <Stack>
@@ -61,7 +70,7 @@ export default ({ trocas }) => {
           : `Serão feitas ${trocaFinal + 1} trocas no total`}
       </Text>
       <Group justify='flex-end'>
-        <Button variant='outline' type='submit' color='red'>
+        <Button variant='outline' onClick={confirmar} color='red'>
           Confirmar
         </Button>
       </Group>

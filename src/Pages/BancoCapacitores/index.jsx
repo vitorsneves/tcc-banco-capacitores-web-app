@@ -30,6 +30,40 @@ export default () => {
     })
   }
 
+  const marcarCapacitoresQueTrocaram = (trocas, trocaFinal) => {
+    for (let troca = 0; troca < trocaFinal; troca++) {
+      const { coordenadas } = trocas.valores[troca]
+      trocarCapacitores(coordenadas[0], coordenadas[1])
+    }
+  }
+
+  const trocarCapacitores = (
+    coordenadaPrimeiro,
+    coordenadaSegundo
+  ) => {
+    const [fase1, ramo1, grupo1, capa1] = coordenadaPrimeiro
+    const [fase2, ramo2, grupo2, capa2] = coordenadaSegundo
+
+    setBanco(bancoAntigo => {
+      let bancoNovo = clonar(bancoAntigo)
+      let primeiroCapacitor = bancoNovo[fase1][ramo1][grupo1][capa1]
+      let segundoCapacitor = bancoNovo[fase2][ramo2][grupo2][capa2]
+
+      primeiroCapacitor.coordenadasAntigas = coordenadaPrimeiro
+      primeiroCapacitor.mudouDeLugar = true
+
+      segundoCapacitor.coordenadasAntigas = coordenadaSegundo
+      segundoCapacitor.mudouDeLugar = true
+
+      bancoNovo[fase1][ramo1][grupo1][capa1] = segundoCapacitor
+      bancoNovo[fase2][ramo2][grupo2][capa2] = primeiroCapacitor
+
+      console.log(bancoNovo)
+
+      return bancoNovo
+    })
+  }
+
   return (
     <Container h='100vh' p='0' fluid>
       <ReactFlow
@@ -41,7 +75,12 @@ export default () => {
       >
         <Panel position='top-left'>
           <Group>
-            <BotaoBalanceamento banco={banco} />
+            <BotaoBalanceamento
+              banco={banco}
+              marcarCapacitoresQueTrocaram={
+                marcarCapacitoresQueTrocaram
+              }
+            />
             <BotaoNightMode />
           </Group>
         </Panel>

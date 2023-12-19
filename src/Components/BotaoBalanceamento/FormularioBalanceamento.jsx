@@ -12,7 +12,7 @@ import {
   Transition
 } from '@mantine/core'
 
-export default ({ realizarBalanceamento }) => {
+export default ({ computarBalaceamento }) => {
   const form = useForm({
     initialValues: {
       tipoDeBalanceamento: 'Trifásico',
@@ -29,7 +29,7 @@ export default ({ realizarBalanceamento }) => {
   useEffect(() => arrumarBugSegmentedControl(form), [])
 
   const confirmar = values => {
-    realizarBalanceamento(values)
+    computarBalaceamento(values)
   }
 
   return (

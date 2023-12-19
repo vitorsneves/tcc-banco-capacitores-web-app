@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { bancoWebAppParaBancoAlgoritmo } from '../../utils/operacoesBanco'
 import SeletorDeOndeParar from './SeletorDeOndeParar'
 
-export default ({ banco }) => {
+export default ({ banco, marcarCapacitoresQueTrocaram }) => {
   const [
     formularioAberto,
     { open: abrirFormulario, close: fecharFormulario }
@@ -23,7 +23,7 @@ export default ({ banco }) => {
 
   const [trocas, setTrocas] = useState([])
 
-  const realizarBalanceamento = configuracoes => {
+  const computarBalaceamento = configuracoes => {
     setCarregando(true)
     setTimeout(async () => {
       const bancoAlgoritmo = bancoWebAppParaBancoAlgoritmo(banco)
@@ -61,7 +61,7 @@ export default ({ banco }) => {
             loaderProps={{ color: 'red' }}
           />
           <FormularioBalanceamento
-            realizarBalanceamento={realizarBalanceamento}
+            computarBalaceamento={computarBalaceamento}
           />
         </Box>
       </Modal>
@@ -70,7 +70,11 @@ export default ({ banco }) => {
         onClose={fecharSeletor}
         title='Selecione um ponto de parada'
       >
-        <SeletorDeOndeParar trocas={trocas} />
+        <SeletorDeOndeParar
+          trocas={trocas}
+          marcarCapacitoresQueTrocaram={marcarCapacitoresQueTrocaram}
+          fecharSeletor={fecharSeletor}
+        />
       </Modal>
     </>
   )
