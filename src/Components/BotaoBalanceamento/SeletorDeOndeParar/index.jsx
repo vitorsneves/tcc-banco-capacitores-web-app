@@ -48,11 +48,39 @@ export default ({
     fecharSeletor()
   }
 
+  if (trocas.valores.length === 0) {
+    return (
+      <Stack>
+        <Text size='sm' ta='justify'>
+          A partir das condições especificadas anteriormente, não foi
+          possível encontrar uma troca que permitisse diminuir a
+          corrente de desbalanço.
+        </Text>
+        <Text size='sm' ta='justify'>
+          Em virtude disso, a disposição de capacitores será mantida.
+        </Text>
+        <Group justify='flex-end'>
+          <Button
+            variant='outline'
+            onClick={fecharSeletor}
+            color='red'
+          >
+            Confirmar
+          </Button>
+        </Group>
+      </Stack>
+    )
+  }
+
   return (
     <Stack>
-      <Text size='sm'>
-        Por favor, selecione até onde deseja ir. As demais trocas
-        serão desconsideradas.
+      <Text ta='justify' size='sm'>
+        {trocas.valores.length === 1
+          ? 'Foi possível encontrar uma troca.\
+           Ela é exibida abaixo. Confirme para aplicá-la.'
+          : 'Abaixo são exibidas todas as possíveis trocas.\
+           Por favor, selecione até onde deseja ir.\
+            As demais trocas serão desconsideradas.'}
       </Text>
       <ScrollArea h={300} type='always'>
         <Stepper

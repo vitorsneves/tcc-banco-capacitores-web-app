@@ -68,7 +68,7 @@ export default ({ banco, marcarCapacitoresQueTrocaram }) => {
       <Modal
         opened={seletorAberto}
         onClose={fecharSeletor}
-        title='Selecione um ponto de parada'
+        title='Resultado'
       >
         <SeletorDeOndeParar
           trocas={trocas}
