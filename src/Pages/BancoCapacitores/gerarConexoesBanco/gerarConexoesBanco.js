@@ -4,8 +4,9 @@ import {
   obterLetraFase
 } from '../../../utils/operacoesBanco'
 
+// antes era strokeWidth: 3
 const edgeStyle = {
-  strokeWidth: 3,
+  strokeWidth: 4,
   stroke: '#000000'
 }
 

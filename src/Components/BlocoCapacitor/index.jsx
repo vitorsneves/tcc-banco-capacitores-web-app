@@ -4,33 +4,22 @@ import { Group } from '@mantine/core'
 import EditorDeCapacitor from './EditorCapacitor'
 import TextoBlocoCapacitor from './TextoBlocoCapacitor'
 import ImagemCapacitor from '../../assets/capacitor.jsx'
-import { calcularDesvio } from '../../utils/operacoesBanco.js'
+import { obterCorCapacitor } from '../../utils/operacoesBanco.js'
 
 const handleSuperiorStyle = {
-  left: 30,
+  //antes era left:30
+  left: 36,
   top: 5,
   background: 'transparent',
   borderColor: 'transparent'
 }
 
 const handleInferiorStyle = {
-  left: 30,
+  //antes era right:30
+  left: 36,
   bottom: 5,
   background: 'transparent',
   borderColor: 'transparent'
-}
-
-const obterCorCapacitor = capacitor => {
-  const { capacitanciaPlaca, capacitanciaMedida } = capacitor
-  const desvio = Math.abs(
-    calcularDesvio(capacitanciaPlaca, capacitanciaMedida)
-  )
-
-  if (desvio >= 10) return '#e03131'
-
-  if (desvio < 10 && desvio > 5) return '#e8590c'
-
-  return '#212529'
 }
 
 const obterTipoHandleSuperior = coordenadas =>
@@ -60,7 +49,18 @@ export default ({
         coordenadas={coordenadas}
         atualizarCoordenadasFixas={atualizarCoordenadasFixas}
       />
-      <Group h='60' gap='4' onClick={abrirEditor}>
+      {/*antes era h='60'*/}
+      <Group
+        h='72'
+        gap='4'
+        style={{ borderRadius: '4px' }}
+        bg={
+          capacitor.mudouDeLugar
+            ? 'rgba(240, 62, 62, 0.1)'
+            : 'transparent'
+        }
+        onClick={abrirEditor}
+      >
         <ImagemCapacitor
           h='100%'
           fill={obterCorCapacitor(capacitor)}

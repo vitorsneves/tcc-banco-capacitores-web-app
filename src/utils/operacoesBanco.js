@@ -91,3 +91,18 @@ export const obterCorCoordenadaTrocada = ehNova => {
 
   return ehNova ? '#2f9e44' : '#e8590c'
 }
+
+export const obterCorCapacitor = capacitor => {
+  const { capacitanciaPlaca, capacitanciaMedida } = capacitor
+  const desvio = Math.abs(
+    calcularDesvio(capacitanciaPlaca, capacitanciaMedida)
+  )
+
+  if (desvio >= 7) return '#c92a2a'
+
+  if (desvio >= 5) return '#e8590c'
+
+  if (desvio >= 2) return '#f08c00'
+
+  return '#212529'
+}
